@@ -1,5 +1,6 @@
 import NextAuth from "next-auth";
 import GithubProvider from "next-auth/providers/github";
+import NodemailderProvider from "next-auth/providers/nodemailer";
 import prisma from "../../prisma/prisma";
 
 export const { auth, handlers, signIn, signOut } = NextAuth({

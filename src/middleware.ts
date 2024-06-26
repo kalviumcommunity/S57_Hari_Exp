@@ -11,6 +11,9 @@ export default auth((req) => {
   if (req.auth && req.nextUrl.pathname === "/signup") {
     return Response.redirect(new URL("/", req.nextUrl.origin));
   }
+  if (req.nextUrl.pathname === "/") {
+    return Response.redirect(new URL("/home", req.nextUrl.origin));
+  }
 });
 
 export const config = {
