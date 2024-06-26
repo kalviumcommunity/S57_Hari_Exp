@@ -1,4 +1,6 @@
 import Signin from '@/components/buttons/signin'
+import { Button } from '@/components/ui/button'
+import { Input } from '@/components/ui/input'
 import { Metadata } from 'next'
 import Link from 'next/link'
 import React from 'react'
@@ -18,6 +20,8 @@ const SignIn = () => {
         </div>
 
         <Signin name='Signin' className=" w-full gap-x-3" />
+
+
         <p className=' text-[12px]'>
           Don't have an account? {" "}
           <Link href={'/signup'} className=' text-blue-600'>Resgister</Link>

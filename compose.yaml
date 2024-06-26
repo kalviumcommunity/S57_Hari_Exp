@@ -6,15 +6,17 @@ services:
       dockerfile: Dockerfile
     ports:
       - 3000:3000
+    develop:
+      watch:
+        - path: ./package.json
+        - action: rebuild
+        - path: ./package.lock.json
+        - action: rebuild
+        - path: .
+        - target: ./app
+        - action: sync
+        - path: ./next.config.mjs
+        - action: rebuild
     volumes:
       - .:/app
       - /app/node_modules
-    develop:
-      watch:
-        - path: package.json
-        - action: rebuild
-        - path: package.lock.json
-        - action: rebuild
-        - path: .
-        - target: /app
-        - action: sync
