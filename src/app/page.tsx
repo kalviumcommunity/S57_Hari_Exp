@@ -1,7 +1,6 @@
 'use client'
 import { useSession } from "next-auth/react";
 import Image from "next/image";
-import { Account } from 'next-auth'
 
 export default function Home() {
   const sessss = useSession()
