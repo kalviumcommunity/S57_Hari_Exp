@@ -1,37 +1,17 @@
-'use client'
-import { Button } from '@/components/ui/button'
-import { Form } from '@/components/ui/form'
-import { Input } from '@/components/ui/input'
-import { Textarea } from '@/components/ui/textarea'
-import Image from 'next/image'
-import React, { useEffect, useRef } from 'react'
-import { Send } from 'lucide-react'
-import Forwardtext from '@/components/_chat/forwardtext'
-import Question from '@/components/_chat/question'
+import React from 'react'
+import ChatInput from '@/components/ai/chat'
+import LLema from '@/components/ai/syncro'
 
 
-
-const Syncro = () => {
-
-
-
+export default function Syncro() {
   return (
-    <div className=' w-full h-full flex flex-col justify-between'>
-      <div className=' w-full h-[90%] p-3 gap-y-6 flex flex-col overflow-y-auto' style={{ scrollbarWidth: 'thin' }}>
-
-        <Forwardtext />
-        <Question />
+    <div className=' w-full h-full grid grid-rows-7'>
+      <div className=' w-full row-span-6 p-6 h-full overflow-y-auto'>
+        <LLema />
       </div>
-      <div className=' w-full h-[20%] flex items-center'>
-        <form action={''} className=' flex h-full w-full justify-center gap-x-1 items-center '>
-          <Textarea className=' w-[80%] rounded-lg block resize-none' />
-          <Button variant={null} className=' '><Send /></Button>
-        </form>
-
-
+      <div className=' h-fit w-full row-span-1 flex items-center justify-center p-6 fixed top-[88vh] backdrop-blur-sm'>
+        <ChatInput />
       </div>
-    </div >
+    </div>
   )
 }
-
-export default Syncro

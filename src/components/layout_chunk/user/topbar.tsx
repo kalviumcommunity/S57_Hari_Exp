@@ -1,5 +1,4 @@
 'use client'
-import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar'
 import {
   Cloud,
   CreditCard,
@@ -16,8 +15,6 @@ import {
   UserPlus,
   Users,
 } from "lucide-react"
-
-import { Button } from "@/components/ui/button"
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -33,21 +30,18 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu"
 
-import { Session } from 'next-auth'
 import React, { Suspense } from 'react'
-import { signOut } from 'next-auth/react'
+import { signOut, useSession } from 'next-auth/react'
+import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
 
-interface UserAvatar {
-  session: Session | null
-}
-const UserAvatar = ({ session }: UserAvatar) => {
+
+const UserAvatar = () => {
+  const llema = useSession()
   return (
     <DropdownMenu>
       <DropdownMenuTrigger className=' rounded-full'>
         <Avatar>
-          <Suspense fallback={<AvatarFallback className=' text-black'>{session?.user?.name?.slice(0, 1)}</AvatarFallback>}>
-            <AvatarImage src={session?.user?.image || undefined} loading='lazy' />
-          </Suspense>
+          <AvatarImage src={llema?.data?.user.image || undefined} alt="" />
         </Avatar>
       </DropdownMenuTrigger>
       <DropdownMenuContent className="w-56 mr-6">
@@ -130,7 +124,7 @@ const UserAvatar = ({ session }: UserAvatar) => {
           <DropdownMenuShortcut>⇧⌘Q</DropdownMenuShortcut>
         </DropdownMenuItem>
       </DropdownMenuContent>
-    </DropdownMenu>
+    </DropdownMenu >
   )
 }
 

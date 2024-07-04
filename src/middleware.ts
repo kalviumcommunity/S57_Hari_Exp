@@ -14,6 +14,9 @@ export default auth((req) => {
   if (req.nextUrl.pathname === "/") {
     return Response.redirect(new URL("/home", req.nextUrl.origin));
   }
+  if (req.nextUrl.pathname === "/nootbook") {
+    return Response.redirect(new URL("/nootbook/overview", req.nextUrl.origin));
+  }
 });
 
 export const config = {
