@@ -1,24 +1,52 @@
 import NextAuth from "next-auth";
 import GithubProvider from "next-auth/providers/github";
+import GoogleProvider from "next-auth/providers/google";
 import NodemailderProvider from "next-auth/providers/nodemailer";
 import prisma from "../../prisma/prisma";
+import type { Session, User } from "next-auth";
+
+declare module "next-auth" {
+  interface Session {
+    user: User & {
+      token: string;
+    };
+  }
+}
 
 export const { auth, handlers, signIn, signOut } = NextAuth({
-  providers: [GithubProvider],
+  providers: [
+    GithubProvider,
+    GoogleProvider({
+      allowDangerousEmailAccountLinking: true,
+      authorization: {
+        access_type: "offline",
+        prompt: "consent",
+        params: {
+          scope: [
+            "https://www.googleapis.com/auth/userinfo.email",
+            "https://www.googleapis.com/auth/userinfo.profile",
+          ].join(" "),
+        },
+        response: "code",
+      },
+    }),
+  ],
   secret: process.env.AUTH_SECRET,
   session: {
     strategy: "jwt",
   },
   callbacks: {
-    async jwt({ token, user }) {
+    async jwt({ token, user, account }) {
       if (user) {
         return {
           ...token,
+          id: user.id,
           email: user.email,
           picture: user.image,
           name: user.name,
         };
       }
+      // console.log(token);
       return token;
     },
     async session({ token, session }) {
@@ -26,6 +54,7 @@ export const { auth, handlers, signIn, signOut } = NextAuth({
         ...session,
         user: {
           ...session,
+          id: token.sub,
           email: token.email,
           name: token.name,
           image: token.picture,
@@ -38,6 +67,7 @@ export const { auth, handlers, signIn, signOut } = NextAuth({
           email: profile?.email as string,
         },
       });
+      console.log(account?.access_token);
       if (!checkUser) {
         const user = await prisma.user.create({
           data: {
@@ -50,7 +80,6 @@ export const { auth, handlers, signIn, signOut } = NextAuth({
         if (!user) return false;
         return true;
       }
-
       return true;
     },
   },

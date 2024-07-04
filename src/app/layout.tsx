@@ -4,6 +4,7 @@ import "./globals.css";
 import { SessionProvider } from "next-auth/react";
 import SessionProviders from "@/providers/session";
 
+
 const inter = Gothic_A1({ subsets: ["latin"], weight: "600" });
 
 export const metadata: Metadata = {
@@ -21,6 +22,6 @@ export default function RootLayout({
       <SessionProviders>
         <body className={inter.className}>{children}</body>
       </SessionProviders>
-    </html>
+    </html >
   );
 }
