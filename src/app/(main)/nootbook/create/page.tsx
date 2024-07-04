@@ -14,6 +14,7 @@ const Page = () => {
 
         <ResizableHandle withHandle />
         <ResizablePanel className=' h-full w-full' maxSize={60} defaultSize={20} minSize={0}>
+          
         </ResizablePanel>
       </ResizablePanelGroup>
     </>
