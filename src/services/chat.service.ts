@@ -23,6 +23,7 @@ const ChatSession = model.startChat({
 export async function sendChat(data: string) {
   const session = await users();
   const uuid = randomBytes(256).BYTES_PER_ELEMENT.toString();
+
   try {
     // create chat session
     const user = await prisma.user.findFirst({
