@@ -26,10 +26,6 @@ const Aiform = () => {
     setLoading(true)
     const response = await aiEditor(data.content)
     console.log(response?.data)
-    // if (response?.data) {
-    //   const token = context?.setTags(response?.data!)
-    //   console.log(context?.tags)
-    // }
     setLoading(false)
   }
   return (
