@@ -9,7 +9,6 @@ import { z } from 'zod'
 import { formSchema } from '@/validation'
 import { sendChat } from '@/services/chat.service'
 import { Loader } from 'lucide-react'
-import { useChat } from '@/context/chat'
 
 
 const ChatInput = () => {

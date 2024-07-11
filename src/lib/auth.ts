@@ -46,7 +46,6 @@ export const { auth, handlers, signIn, signOut } = NextAuth({
           name: user.name,
         };
       }
-      // console.log(token);
       return token;
     },
     async session({ token, session }) {
@@ -83,8 +82,9 @@ export const { auth, handlers, signIn, signOut } = NextAuth({
       return true;
     },
   },
-  // pages: {
-  //   signIn: "/auth/signin",
-  //   signOut: "/auth/signout",
-  // },
+  pages: {
+    signIn: "/auth/signin",
+    signOut: "/auth/signout",
+    error: "/auth/error",
+  },
 });

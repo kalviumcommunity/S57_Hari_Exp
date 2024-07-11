@@ -1,7 +1,7 @@
 "use server";
 import { GoogleGenerativeAI } from "@google/generative-ai";
 
-const apiKey = process.env.GOOGLE_GEMINI_API;
+const apiKey = process.env.NEXT_PUBLIC_GOOGLE_GEMINI_API;
 const genAi = new GoogleGenerativeAI(apiKey!);
 const model = genAi.getGenerativeModel({
   model: "gemini-1.5-flash",
@@ -9,20 +9,20 @@ const model = genAi.getGenerativeModel({
     temperature: 1,
     topP: 0.95,
     topK: 64,
-    maxOutputTokens: 8192,
+    maxOutputTokens: 400,
     responseMimeType: "text/plain",
   },
 });
-const chatSession = model.startChat({
-  history: [],
-});
 
-export const aiEditor = async (data?: string) => {
+export const aiEditor = async (content: string) => {
   try {
-    const billionaire = await chatSession.sendMessage(data!);
+    const chatSession = model.startChat({
+      history: [],
+    });
+    const billionaire = await chatSession.sendMessage(content!);
     const llema = billionaire.response.text();
     console.log(llema);
-    return llema;
+    return { data: llema };
   } catch (error) {
     console.log(error);
   }

@@ -12,8 +12,8 @@ const LLema = async () => {
   const chat = await data()
   return (
     <div className='flex gap-y-6 flex-col'>
-      {chat.map(chat => chat.AiMessage.map(ai => (
-        <Forwardtext message={ai.content} image='' />
+      {chat.map(chat => chat.AiMessage.map((ai, i) => (
+        <Forwardtext message={ai.content} image='' key={i} />
       )))}
       <Question />
     </div>

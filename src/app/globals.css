@@ -74,3 +74,10 @@
     @apply bg-background text-foreground;
   }
 }
+
+.prose {
+  max-width: none !important;
+}
+.ProseMirror-selectednode {
+  outline: 3px solid rgb(62, 0, 128);
+}

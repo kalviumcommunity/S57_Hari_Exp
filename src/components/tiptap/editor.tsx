@@ -1,63 +1,91 @@
 'use client'
 import { useEditor } from '@tiptap/react'
-import React, { useEffect, useState } from 'react'
-import { Button } from '../ui/button'
-import Counter from './counter'
-import BubbleMenu from './bubbleMenu'
+import React, { useEffect } from 'react'
 import CharacterCount from '@tiptap/extension-character-count'
 import Color from '@tiptap/extension-color'
 import TextAlign from '@tiptap/extension-text-align'
 import TextStyle from '@tiptap/extension-text-style'
-import Paragraph from '@tiptap/extension-paragraph'
-import Heading from '@tiptap/extension-heading'
 import Image from '@tiptap/extension-image'
 import Highlight from '@tiptap/extension-highlight'
-import Document from '@tiptap/extension-document'
-import Text from '@tiptap/extension-text'
-import { save } from '@/services/save.service'
+import BulletList from '@tiptap/extension-list-keymap'
+import TaskList from '@tiptap/extension-task-list'
+import TaskItem from '@tiptap/extension-task-item'
+import StarterKit from '@tiptap/starter-kit'
+import { ResizablePanel, ResizablePanelGroup } from '../ui/resizable'
+import AiGenerator from './generator'
+import Link from '@tiptap/extension-link'
+import Youtube from '@tiptap/extension-youtube'
 import Editors from '.'
-// import Editors from '.'
-// import { aiEditor } from '@/services/editor.service'
-// import Editors from '.'
+import BubbleMenu from './bubbleMenu'
+import Hover from './floating'
+import Provider, { useTagContext } from '@/context/chat'
 
 
-const limit = 380
+
+
+const CustomTaskItem = TaskItem.extend({
+  content: 'inline*',
+})
 const Editor = () => {
   const editor = useEditor({
     extensions: [
+      Link.configure({
+        openOnClick: true,
+        autolink: true,
+        protocols: ['https', 'http']
+      }),
       Image,
       Highlight,
-      TextAlign,
-      Document, Paragraph, Text, TextStyle, Color, Heading.configure({
-        levels: [1, 2, 3]
+      BulletList,
+      TextAlign.configure({
+        types: ['heading', 'paragraph']
       }),
+      TextStyle,
+      Color,
+      StarterKit,
+      Youtube,
+      CustomTaskItem,
+      TaskList,
       CharacterCount.configure({
-        limit,
+        limit: 800,
       })
     ],
 
     editorProps: {
       attributes: {
-        class: 'w-full h-[64vh] mx-auto focus:outline-none overflow-y-auto p-4 absolute  bg-white bg-[radial-gradient(#e5e7eb_1px,transparent_1px)] [background-size:16px_16px]',
+        class: 'prose [&_ol]:list-decimal [&_ul]:list-disc w-full h-[86vh] focus:outline-none overflow-y-auto p-4 absolute  bg-white bg-[radial-gradient(#e5e7eb_1px,transparent_1px)] [background-size:16px_16px] selection:bg-slate-400',
       },
     },
     enablePasteRules: true,
-    content: "",
   })
-  // async function send() {
-  //   const sned = await save(editor?.getHTML())
-  // }
+
+  // useEffect(() => {
+  //   function async() {
+  //     const tags = useTagContext()
+  //     console.log(tags?.tags)
+  //     editor?.commands.setContent(tags?.tags!)
+  //   }
+  //   async()
+  // }, [])
   return (
-    <div>
-      <BubbleMenu editor={editor} />
-      <div className=' w-full h-full flex  flex-col  '>
-        <Editors editor={editor} />
-        <div className=' flex flex-col gap-y-6'>
-          {/* <Button onClick={() => send()}>llema</Button> */}
-          <Counter editor={editor} limit={limit} />
-        </div>
-      </div>
-    </div>
+    <>
+      <ResizablePanelGroup direction="horizontal">
+        <Provider>
+          <ResizablePanel className=' w-full h-full overflow-clip' maxSize={100} defaultSize={80}>
+            <div className=' h-full'>
+              <BubbleMenu editor={editor} />
+              <Hover editor={editor} />
+              <Editors editor={editor} />
+            </div>
+          </ResizablePanel>
+          <ResizablePanel className=' w-[25%] h-full p-2 ' maxSize={20} defaultSize={20}
+            onChange={(e) => console.log(e)}
+          >
+            <AiGenerator editor={editor} />
+          </ResizablePanel>
+        </Provider>
+      </ResizablePanelGroup>
+    </>
   )
 }
 

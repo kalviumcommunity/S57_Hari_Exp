@@ -1,13 +1,11 @@
 "use server";
 import { GoogleGenerativeAI } from "@google/generative-ai";
 import prisma from "../../prisma/prisma";
-import { user } from "./auth.service";
+import { users } from "./auth.service";
 import { revalidatePath } from "next/cache";
-import { parts } from "@/prompt";
-import { useChat } from "@/context/chat";
 import { randomBytes } from "crypto";
 
-const apiKey = process.env.GOOGLE_GEMINI_API;
+const apiKey = process.env.NEXT_PUBLIC_GOOGLE_GEMINI_API;
 const genAi = new GoogleGenerativeAI(apiKey!);
 const model = genAi.getGenerativeModel({
   model: "gemini-1.5-flash",
@@ -20,16 +18,12 @@ const model = genAi.getGenerativeModel({
   },
 });
 const ChatSession = model.startChat({
-  history: [
-    {
-      role: "user",
-      parts: parts,
-    },
-  ],
+  history: [],
 });
 export async function sendChat(data: string) {
-  const session = await user();
+  const session = await users();
   const uuid = randomBytes(256).BYTES_PER_ELEMENT.toString();
+
   try {
     // create chat session
     const user = await prisma.user.findFirst({

@@ -38,8 +38,8 @@ const Sidebar = () => {
     <div className=' h-full w-full flex items-center p-4 flex-col gap-y-8'>
       <Image src={logo} alt='' />
       <div className=' flex flex-col gap-y-2 pt-6'>
-        {icon.map(data => (
-          <Buttons link={data.link} logo={data.logo}>
+        {icon.map((data, i) => (
+          <Buttons link={data.link} logo={data.logo} key={i}>
 
           </Buttons>
         ))}

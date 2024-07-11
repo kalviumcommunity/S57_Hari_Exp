@@ -1,11 +1,10 @@
-import { aiEditor } from '@/services/editor.service'
-import { EditorContent, EditorOptions } from '@tiptap/react'
+import { EditorContent, type Editor } from '@tiptap/react'
 import React from 'react'
 
 
-const Editors = ({ editor }: EditorOptions) => {
+const Editors = ({ editor }: { editor: Editor }) => {
   return (
-    <EditorContent editor={editor} className=' w-full h-[64vh]' contentEditable="inherit" />
+    <EditorContent editor={editor} className=' w-full h-full' contentEditable="inherit" />
   )
 }
 

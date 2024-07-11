@@ -1,10 +1,11 @@
-import React from 'react'
+import React, { useCallback } from 'react'
+import { useMemo } from 'react'
 
 function Counter({ editor, limit }: { editor: any, limit: number }) {
-  const percentage = editor ? Math.round((100 / limit) * editor.storage.characterCount.characters())
-    : 0
+  const percentage = useCallback(() => editor ? Math.round((100 / limit) * editor.storage.characterCount.characters()) : 0, [editor, limit])
+
   return (
-    <div className={`character-count ${editor?.storage.characterCount.characters() === limit ? '' : ''}  flex justify-between `}>
+    <div className={`character-count ${editor?.storage.characterCount.characters() === limit ? '' : ''}  flex justify-between items-center`}>
       <div className=' flex gap-x-1'>
         <svg
           height="20"
@@ -35,11 +36,10 @@ function Counter({ editor, limit }: { editor: any, limit: number }) {
           />
         </svg>
 
-        {editor?.storage.characterCount.characters()} / {limit} characters
+        <p className=' text-[12px] max-lg:hidden'>{editor?.storage.characterCount.characters()} / {limit} characters</p>
         <br />
       </div>
       <div>
-        {editor?.storage.characterCount.words()} words
       </div>
 
     </div>
