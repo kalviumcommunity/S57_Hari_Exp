@@ -1,8 +1,8 @@
 import type { Metadata } from "next";
 import { Gothic_A1 } from "next/font/google";
 import "./globals.css";
-import { SessionProvider } from "next-auth/react";
 import SessionProviders from "@/providers/session";
+import Provider from "@/context/chat";
 
 
 const inter = Gothic_A1({ subsets: ["latin"], weight: "600" });
@@ -19,9 +19,11 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <SessionProviders>
-        <body className={inter.className}>{children}</body>
-      </SessionProviders>
+      <Provider>
+        <SessionProviders>
+          <body className={inter.className}>{children}</body>
+        </SessionProviders>
+      </Provider>
     </html >
   );
 }

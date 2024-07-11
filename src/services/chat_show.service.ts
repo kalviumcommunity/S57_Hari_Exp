@@ -2,18 +2,18 @@
 
 import { revalidatePath } from "next/cache";
 import prisma from "../../prisma/prisma";
-import { user } from "./auth.service";
+import { users } from "./auth.service";
 
 export const content = async () => {
-  const session = await user();
-  const users = await prisma.user.findFirst({
+  const session = await users();
+  const userss = await prisma.user.findFirst({
     where: {
       email: session.user?.email!,
     },
   });
   const s = await prisma.chat.findMany({
     where: {
-      userId: users?.id,
+      userId: userss?.id,
     },
     include: {
       AiMessage: {

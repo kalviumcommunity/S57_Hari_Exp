@@ -2,8 +2,7 @@
 
 import { auth, signIn } from "@/lib/auth";
 
-
-export async function user() {
+export async function users() {
   const session = await auth();
   return {
     ...session,

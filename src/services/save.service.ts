@@ -1,34 +1,56 @@
+"use server";
+import { revalidatePath } from "next/cache";
 import prisma from "../../prisma/prisma";
-import { user } from "./auth.service";
+import { users } from "./auth.service";
+import { Ratelimit } from "@upstash/ratelimit";
+import { headers } from "next/headers";
+import { redis } from "@/lib/redis";
 
-export const save = async (editor) => {
-  const session = await user();
-  const users = await prisma.user.findFirst({
-    where: {
-      email: session.user?.email,
-    },
-  });
-  const html = await editor.getHTML();
-  let nootbook = await prisma.nootbook.findFirst({
-    where: {
-      userId: users?.id,
-    },
-  });
-  if (!nootbook) {
-    nootbook = await prisma.nootbook.create({
-      data: {
-        userId: users?.id,
+const ratelimit = new Ratelimit({
+  redis,
+  limiter: Ratelimit.slidingWindow(4, "120s"),
+});
+export const save = async (html: string, tag: string) => {
+  const up = headers().get("x-forwared-for");
+  const { success, remaining } = await ratelimit.limit(up);
+  console.log(success, remaining);
+  try {
+    if (remaining === 0 && !success) {
+      return {
+        error: "Rate Limit Exceeded",
+        reason:
+          "You have exceeded the allowed number of requests; please wait a few minutes and try again",
+      };
+    }
+    const session = await users();
+    const userss = await prisma.user.findFirst({
+      where: {
+        email: session.user?.email,
       },
     });
-  }
-  try {
+    let nootbook = await prisma.nootbook.findFirst({
+      where: {
+        userId: userss?.id,
+      },
+    });
+    if (!nootbook) {
+      nootbook = await prisma.nootbook.create({
+        data: {
+          userId: userss?.id,
+        },
+      });
+    }
     const notes = await prisma.note.create({
       data: {
         notes: html,
         nootbookId: nootbook.id,
+        tag: tag,
       },
     });
-    console.log(notes);
+    revalidatePath(`/nootbook/${tag}`);
+    return {
+      success: notes,
+    };
   } catch (error) {
     console.log(error);
   }
