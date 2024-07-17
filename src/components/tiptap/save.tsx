@@ -4,11 +4,26 @@ import { Button } from '../ui/button'
 import type { Editor } from '@tiptap/react'
 import { Loader } from 'lucide-react'
 import { save } from '@/services/save.service'
-import { tag } from '@/validation'
 import { useRouter } from 'next/navigation'
 import { useToast } from '../ui/use-toast'
-import { useTagContext } from '@/context/chat'
+import { Title } from '@/services/tag_generator.service'
+import { tags, title } from '@/lib/prompt'
+import { genTags } from '@/services/tags.service'
 
+
+const tagss = async (save: string) => {
+  const tagss = JSON.stringify(save + tags)
+  const tagsss = await genTags(tagss)
+  console.log(tagsss)
+  return tagsss
+}
+
+const titles = async (saves: string) => {
+  const content = JSON.stringify(saves + title)
+  const llema = (await Title(content)).replace(/\n/g, '').replace(/ /g, '_')
+  console.log(llema)
+  return llema
+}
 
 const Save = ({ editor }: { editor: Editor }) => {
   const { toast } = useToast()
@@ -20,12 +35,15 @@ const Save = ({ editor }: { editor: Editor }) => {
 
       const saves = editor?.getHTML()
       console.log(saves)
-      const tags = tag(
-        saves
-      )
-      const insert = await save(saves, tags)
+
+      const llema = await titles(saves)
+      const tagsss = await tagss(saves)
+      console.log(llema, tagsss)
+
+      const insert = await save(saves, llema, tagsss)
+      console.log(insert?.success)
       if (insert?.success) {
-        router.push(`/nootbook/${tags}`)
+        router.push(`/nootbook/${llema}`)
       }
       if (insert?.error) {
         return toast({

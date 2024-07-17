@@ -1,16 +1,22 @@
 "use server";
 import { revalidatePath } from "next/cache";
-import prisma from "../../prisma/prisma";
+import { prisma } from "../../prisma/prisma";
 import { users } from "./auth.service";
 import { Ratelimit } from "@upstash/ratelimit";
 import { headers } from "next/headers";
 import { redis } from "@/lib/redis";
 
+import { Note } from "@prisma/client";
+
 const ratelimit = new Ratelimit({
   redis,
   limiter: Ratelimit.slidingWindow(4, "120s"),
 });
-export const save = async (html: string, tag: string) => {
+export const save = async (
+  html: string,
+  tag: string,
+  tags: string | string[]
+) => {
   const up = headers().get("x-forwared-for");
   const { success, remaining } = await ratelimit.limit(up);
   console.log(success, remaining);
@@ -40,14 +46,19 @@ export const save = async (html: string, tag: string) => {
         },
       });
     }
-    const notes = await prisma.note.create({
+    const notes: Note = await prisma.note.create({
       data: {
         notes: html,
         nootbookId: nootbook.id,
         tag: tag,
+        tags: tags,
       },
     });
+    console.log(notes);
+    // llema(userss?.id, notes);
+    // store(userss?.notebookId, notes, notes.id);
     revalidatePath(`/nootbook/${tag}`);
+    revalidatePath(`/nootbook/overview`);
     return {
       success: notes,
     };
@@ -55,3 +66,11 @@ export const save = async (html: string, tag: string) => {
     console.log(error);
   }
 };
+
+// async function llema(userId: string, notes: {}) {
+//   const post = `user:${userId}`;
+//   const data = await redis.hset(post, {
+//     [`postid:${Date.now()}`]: notes,
+//   });
+//   console.log(data);
+// }

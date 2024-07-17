@@ -2,6 +2,7 @@ import React from 'react'
 import ChatInput from '@/components/ai/chat'
 import LLema from '@/components/ai/syncro'
 
+export const runtime = 'edge'
 
 export default function Syncro() {
   return (
@@ -15,3 +16,4 @@ export default function Syncro() {
     </div>
   )
 }
+

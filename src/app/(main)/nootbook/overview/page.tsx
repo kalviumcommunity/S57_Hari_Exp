@@ -1,14 +1,12 @@
-import dynamic from 'next/dynamic'
+import Index from '@/components/nootbook_preview'
 import React from 'react'
 
-const DynamicCreateButton = dynamic(() => import('@/components/nootbook/create'))
+export const runtime = "edge"
 
 const Overview = () => {
   return (
     <div className=' w-full h-full'>
-      <div>
-        <DynamicCreateButton />
-      </div>
+      <Index />
     </div>
   )
 }

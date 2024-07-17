@@ -1,9 +1,12 @@
 "use server";
 import { GoogleGenerativeAI } from "@google/generative-ai";
-import prisma from "../../prisma/prisma";
+import { prisma } from "../../prisma/prisma";
 import { users } from "./auth.service";
-import { revalidatePath } from "next/cache";
+import { revalidatePath, revalidateTag } from "next/cache";
 import { randomBytes } from "crypto";
+import { redis } from "@/lib/redis";
+import { Ratelimit } from "@upstash/ratelimit";
+import { headers } from "next/headers";
 
 const apiKey = process.env.NEXT_PUBLIC_GOOGLE_GEMINI_API;
 const genAi = new GoogleGenerativeAI(apiKey!);
@@ -13,16 +16,28 @@ const model = genAi.getGenerativeModel({
     temperature: 1,
     topP: 0.95,
     topK: 64,
-    maxOutputTokens: 8192,
+    maxOutputTokens: 200,
     responseMimeType: "text/plain",
   },
 });
 const ChatSession = model.startChat({
   history: [],
 });
+
+const ratelimit = new Ratelimit({
+  redis,
+  limiter: Ratelimit.slidingWindow(40, "10s"),
+});
 export async function sendChat(data: string) {
+  const ip = headers().get("x-forwared-for");
+  const { limit, success } = await ratelimit.limit(ip);
+  if (!success) {
+    return {
+      llema: "excceeded",
+    };
+  }
   const session = await users();
-  const uuid = randomBytes(256).BYTES_PER_ELEMENT.toString();
+  const uuid = crypto.randomUUID();
 
   try {
     // create chat session
@@ -72,21 +87,22 @@ export async function sendChat(data: string) {
       console.log(storeAiChat);
     }
     revalidatePath("/syncro");
+    revalidateTag("/syncro");
   } catch (error) {
     console.log(error);
   }
 }
 
 export async function deletes() {
-  const session = await user();
-  const users = await prisma.user.findFirst({
+  const session = await users();
+  const userss = await prisma.user.findFirst({
     where: {
       email: session.user?.email!,
     },
   });
   const d = await prisma.userMessage.deleteMany({
     where: {
-      userId: users?.id,
+      userId: userss?.id,
     },
   });
   const l = await prisma.aiMessage.deleteMany({

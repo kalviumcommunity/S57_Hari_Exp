@@ -9,10 +9,14 @@ import { zodResolver } from '@hookform/resolvers/zod'
 import { aiEditor } from '@/services/editor.service'
 import { Loader } from 'lucide-react'
 import { useTagContext } from '@/context/chat'
+import { prompt } from '@/lib/prompt'
 
-const Aiform = () => {
+interface AiformInterface {
+  pass: (data: string) => void
+  disable?: boolean
+}
+const Aiform = ({ pass, disable }: AiformInterface) => {
   const [isLoading, setLoading] = useState(false)
-  const context = useTagContext()
   const contentSchema = z.object({
     content: z.string().max(60)
   })
@@ -24,7 +28,9 @@ const Aiform = () => {
   })
   async function onSubmit(data: z.infer<typeof contentSchema>) {
     setLoading(true)
-    const response = await aiEditor(data.content)
+    const res = JSON.stringify(data.content + prompt)
+    const response = await aiEditor(res)
+    pass(response?.data)
     console.log(response?.data)
     setLoading(false)
   }
@@ -38,11 +44,11 @@ const Aiform = () => {
             control={form.control}
             render={({ field }) => (
               <FormItem>
-                <Textarea {...field} className=' h-60' />
+                <Textarea {...field} className=' h-40' />
               </FormItem>
             )}
           />
-          <Button type='submit'>{isLoading ? <Loader className=" animate-spin w-6 h-6" /> : 'Generator'}</Button>
+          <Button type='submit' disabled={disable && disable}>{isLoading ? <Loader className=" animate-spin w-6 h-6" /> : 'Generator'}</Button>
         </form>
       </Form>
     </div>
