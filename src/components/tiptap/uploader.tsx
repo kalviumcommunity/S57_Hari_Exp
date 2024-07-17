@@ -3,8 +3,9 @@ import { Input } from '../ui/input'
 import type { Editor } from '@tiptap/react'
 import image from '../../../public/picture-svgrepo-com.svg'
 import Image from 'next/image'
+import { Button } from '../ui/button'
 
-const FileUploader = ({ editor }: { editor: Editor }) => {
+const FileUploader = ({ editor, disable }: { editor: Editor, disable: boolean }) => {
   const addImage = (e) => {
     const file = e.target.files[0]
     if (file) {
@@ -16,7 +17,11 @@ const FileUploader = ({ editor }: { editor: Editor }) => {
     }
   }
   return (
-    <div className=' relative border-dashed  border border-sky-600 rounded-lg h-[6vh] justify-center flex items-center text-[12px] gap-x-4'>
+    <Button
+
+      variant={null}
+      disabled={disable}
+      className=' relative border-dashed  border border-sky-600 rounded-lg h-[6vh] justify-center flex items-center text-[12px] gap-x-4'>
       <Input
         type='file'
         onChange={(e) => addImage(e)}
@@ -34,7 +39,7 @@ const FileUploader = ({ editor }: { editor: Editor }) => {
         </g>
       </svg>
       <p className=' max-lg:hidden'>Upload image from file</p>
-    </div>
+    </Button>
   )
 }
 

@@ -2,7 +2,7 @@ import NextAuth from "next-auth";
 import GithubProvider from "next-auth/providers/github";
 import GoogleProvider from "next-auth/providers/google";
 import NodemailderProvider from "next-auth/providers/nodemailer";
-import prisma from "../../prisma/prisma";
+import { prisma } from "../../prisma/prisma";
 import type { Session, User } from "next-auth";
 
 declare module "next-auth" {

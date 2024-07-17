@@ -2,7 +2,7 @@ import React from 'react'
 import Editor from '@/components/tiptap/editor'
 import Provider from '@/context/chat'
 
-// export const runtime = "experimental-edge"
+export const runtime = "edge"
 
 const Page = () => {
   return (

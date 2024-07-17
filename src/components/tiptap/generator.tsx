@@ -6,6 +6,7 @@ import Youtube from './youtube'
 import ImageFromLink from './image from link'
 import Save from './save'
 import FileUploader from './uploader'
+import { aiEditor } from '@/services/editor.service'
 
 
 // const FileUploader = dynamic(() => import('./uploader'))
@@ -20,7 +21,7 @@ const AiGenerator = ({ editor }: { editor: Editor }) => {
         <Youtube editor={editor} />
         <ImageFromLink editor={editor} />
         <FileUploader editor={editor} />
-        <Aiform />
+        <Aiform service={aiEditor} />
       </div>
       <div className=' w-full flex justify-between items-center max-lg:justify-center max-lg:gap-y-6 max-lg:flex-col-reverse'>
         <Save editor={editor} />

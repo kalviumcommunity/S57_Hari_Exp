@@ -15,3 +15,16 @@ export function tag(taag: string) {
   }
   return slug[0];
 }
+
+export function description(taag: string) {
+  const tag = taag;
+  const slug = tag
+    ?.replace(/<.*?>/gm, "")
+    .replace(/ /g, " ")
+    .match(/^(\w+\s+){0,6}(\w+)/);
+  if (!slug) {
+    return;
+  }
+  console.log(slug[0]);
+  return slug[0];
+}

@@ -11,8 +11,9 @@ import { sendChat } from '@/services/chat.service'
 import { Loader } from 'lucide-react'
 
 
+
 const ChatInput = () => {
-  const { userMessageAction } = useChat();
+  // const {  } = userChat();
   const [isLoading, setLoading] = useState(false)
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
@@ -21,7 +22,7 @@ const ChatInput = () => {
     }
   })
   async function onsubmit(data: z.infer<typeof formSchema>) {
-    userMessageAction(data.chat)
+    // userMessageAction(data.chat)
     setLoading(true)
     const parses = formSchema.parse(data)
     if (!parses) return
