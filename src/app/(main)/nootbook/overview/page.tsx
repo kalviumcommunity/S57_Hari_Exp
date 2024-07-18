@@ -1,7 +1,7 @@
 import Index from '@/components/nootbook_preview'
 import React from 'react'
 
-export const runtime = "edge"
+// export const runtime = "edge"
 
 const Overview = () => {
   return (

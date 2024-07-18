@@ -18,7 +18,7 @@ interface AiformInterface {
 const Aiform = ({ pass, disable }: AiformInterface) => {
   const [isLoading, setLoading] = useState(false)
   const contentSchema = z.object({
-    content: z.string().max(60)
+    content: z.string().min(2)
   })
   const form = useForm<z.infer<typeof contentSchema>>({
     resolver: zodResolver(contentSchema),
