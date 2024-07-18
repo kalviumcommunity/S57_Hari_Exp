@@ -21,7 +21,10 @@ import { Switch } from "@/components/ui/switch"
 import { Button } from '@/components/ui/button'
 import { updateNotes } from '@/services/update_notes.service'
 import Counter from '../counter'
+// import Sidebar from './sidebar'
+import dynamic from 'next/dynamic'
 import Sidebar from './sidebar'
+
 
 
 const CustomTaskItem = TaskItem.extend({

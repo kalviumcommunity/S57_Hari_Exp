@@ -4,7 +4,7 @@ import { redis } from "@/lib/redis";
 import { prisma } from "../../prisma/prisma";
 import { users } from "./auth.service";
 
-export async function notes({ query }: { query: string }) {
+export async function notes() {
   try {
     const email = await users();
     const id = await prisma.user.findFirst({
@@ -16,16 +16,6 @@ export async function notes({ query }: { query: string }) {
     const notes = await prisma.nootbook.findMany({
       where: {
         userId: id?.id,
-        notes: {
-          some: {
-            tag: {
-              contains: query ? query : "",
-            },
-            notes: {
-              contains: query ? query : "",
-            },
-          },
-        },
       },
       select: {
         notes: {

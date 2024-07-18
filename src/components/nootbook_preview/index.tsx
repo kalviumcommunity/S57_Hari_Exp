@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React from 'react'
 import Header from './header'
 import { notes } from '@/services/notes.service'
 import { prisma } from '../../../prisma/prisma'
@@ -9,7 +9,7 @@ import scribble from '../../../public/scribble-svgrepo-com.svg'
 
 
 async function llema() {
-  const content = await notes({ query: 'Scribble' })
+  const content = await notes()
   const boolean = content?.map(l => l.notes.length > 0) ? true : false
   console.log(boolean)
   const data = content?.map(content => content.notes.map(note => note))
@@ -45,7 +45,7 @@ const Index = async () => {
             ))
           ) : (
             <div className=' w-full h-full flex justify-center items-center  flex-col gap-y-6 '>
-              <Image src={notFound} alt='' className=' w-[60%] h-[60%]' />
+              <Image src={notFound} alt='' className=' w-[40%] h-[40%]' />
               <div className=' flex'>
                 <Image src={scribble} alt='' className=' w-6 h-6' />
                 <p className=' text-[12px]'>Create some notes to make your workload easier</p>

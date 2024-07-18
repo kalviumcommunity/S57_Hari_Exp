@@ -9,7 +9,7 @@ import Aiform from '../aiform'
 import Youtube from '../youtube'
 import FileUploader from '../uploader'
 import { Loader } from 'lucide-react'
-import { setInterval } from 'timers'
+import { Clipboard } from './copy'
 
 const Sidebar = ({ editor, noteId, setEdit }: { editor: Editor, noteId: string, setEdit: (data: boolean) => void }) => {
 
@@ -19,6 +19,7 @@ const Sidebar = ({ editor, noteId, setEdit }: { editor: Editor, noteId: string, 
   console.log(saves)
   const [content, setContent] = useState<string>()
   const [editable, setEditor] = useState(false)
+  const [copy, setCopy] = useState(false)
 
   // functions
   const handle = (data: string) => {
@@ -43,9 +44,12 @@ const Sidebar = ({ editor, noteId, setEdit }: { editor: Editor, noteId: string, 
   console.log(content)
   return (
     <div className=' flex flex-col justify-between h-full overflow-y-auto ' style={{ scrollbarWidth: 'none' }}>
-      <div className=' flex gap-x-6 border py-2 rounded-full px-4 mb-4'>
-        <Switch onCheckedChange={() => edit()} />
-        <p className=' text-[12px] items-center flex'>{editable ? 'Editable' : 'Edit'}</p>
+      <div className=' flex gap-x-6 '>
+        <div className=' flex gap-x-6 border py-2 rounded-full px-4 mb-4'>
+          <Switch onCheckedChange={() => edit()} />
+          <p className=' text-[12px] items-center flex'>{editable ? 'Editable' : 'Edit'}</p>
+        </div>
+        <Clipboard noteId={noteId} />
       </div>
       <div className=' flex flex-col gap-y-2'>
         <Youtube editor={editor} disable={!editable} />

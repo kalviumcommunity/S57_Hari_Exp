@@ -56,9 +56,10 @@ export const save = async (
     });
     console.log(notes);
     // llema(userss?.id, notes);
-    // store(userss?.notebookId, notes, notes.id);
-    revalidatePath(`/nootbook/${tag}`);
+    // store(userss?.notebookId, notes, notes.id)
     revalidatePath(`/nootbook/overview`);
+    revalidatePath(`/nootbook/${tag}`);
+
     return {
       success: notes,
     };
