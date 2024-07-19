@@ -10,12 +10,12 @@ import scribble from '../../../public/scribble-svgrepo-com.svg'
 
 async function llema() {
   const content = await notes()
-  const boolean = content?.map(l => l.notes.length > 0) ? true : false
+  const boolean = content?.map(l => l.notes.length > 0)[0]
+  const llema = content?.map(l => l.notes.map(l => l.notes))
   console.log(boolean)
-  const data = content?.map(content => content.notes.map(note => note))
+  const data = content
   console.log(data)
   return {
-    next: { revalidate: 10 },
     render: boolean,
     content: data
   }
@@ -38,11 +38,9 @@ const Index = async () => {
       <div className={`min-h-fit mt-[4rem] ${notes.render && "grid grid-cols-4 gap-y-4"}  w-full h-[80%]`}>
         {
           notes.render ? (
-            notes.content?.map(note => (
-              note.map(n => (
-                <Card date={n.createdAt} heading={n.tag} paragraph={n.notes} />
-              ))
-            ))
+            notes?.content?.map(llema => llema.notes.map(note => (
+              < Card date={note.createdAt} heading={note.tag} paragraph={note.notes} />
+            )))
           ) : (
             <div className=' w-full h-full flex justify-center items-center  flex-col gap-y-6 '>
               <Image src={notFound} alt='' className=' w-[40%] h-[40%]' />
