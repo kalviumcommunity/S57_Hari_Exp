@@ -54,6 +54,7 @@ export const save = async (
         tags: tags,
       },
     });
+    llema(userss?.id, notes, notes.id);
     console.log(notes);
     // llema(userss?.id, notes);
     // store(userss?.notebookId, notes, notes.id)
@@ -68,10 +69,10 @@ export const save = async (
   }
 };
 
-// async function llema(userId: string, notes: {}) {
-//   const post = `user:${userId}`;
-//   const data = await redis.hset(post, {
-//     [`postid:${Date.now()}`]: notes,
-//   });
-//   console.log(data);
-// }
+async function llema(userId: string, notes: {}, noteId: string) {
+  const post = `user:${userId}`;
+  const data = await redis.hset(post, {
+    [`postId:${noteId}`]: notes,
+  });
+  console.log(data);
+}

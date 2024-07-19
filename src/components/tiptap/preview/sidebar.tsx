@@ -44,7 +44,7 @@ const Sidebar = ({ editor, noteId, setEdit }: { editor: Editor, noteId: string, 
   console.log(content)
   return (
     <div className=' flex flex-col justify-between h-full overflow-y-auto ' style={{ scrollbarWidth: 'none' }}>
-      <div className=' flex gap-x-6 '>
+      <div className=' flex gap-x-6  justify-between'>
         <div className=' flex gap-x-6 border py-2 rounded-full px-4 mb-4'>
           <Switch onCheckedChange={() => edit()} />
           <p className=' text-[12px] items-center flex'>{editable ? 'Editable' : 'Edit'}</p>
