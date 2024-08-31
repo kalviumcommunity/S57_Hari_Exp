@@ -3,7 +3,6 @@ import { GoogleGenerativeAI } from "@google/generative-ai";
 import { prisma } from "../../prisma/prisma";
 import { users } from "./auth.service";
 import { revalidatePath, revalidateTag } from "next/cache";
-import { randomBytes } from "crypto";
 import { redis } from "@/lib/redis";
 import { Ratelimit } from "@upstash/ratelimit";
 import { headers } from "next/headers";
@@ -30,7 +29,7 @@ const ratelimit = new Ratelimit({
 });
 export async function sendChat(data: string) {
   const ip = headers().get("x-forwared-for");
-  const { limit, success } = await ratelimit.limit(ip);
+  const { success } = await ratelimit.limit(ip);
   if (!success) {
     return {
       llema: "excceeded",
@@ -100,12 +99,12 @@ export async function deletes() {
       email: session.user?.email!,
     },
   });
-  const d = await prisma.userMessage.deleteMany({
+  await prisma.userMessage.deleteMany({
     where: {
       userId: userss?.id,
     },
   });
-  const l = await prisma.aiMessage.deleteMany({
+  await prisma.aiMessage.deleteMany({
     where: {
       chat: {
         userId: users?.id,

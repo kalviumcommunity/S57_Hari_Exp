@@ -9,7 +9,7 @@ const model = genAi.getGenerativeModel({
     temperature: 1,
     topP: 0.95,
     topK: 64,
-    maxOutputTokens: 200,
+    maxOutputTokens: 2000,
     responseMimeType: "text/plain",
   },
 });
@@ -21,7 +21,9 @@ export const aiEditor = async (content: string) => {
     });
     const billionaire = await chatSession.sendMessage(content!);
     const llema = billionaire.response.text();
-    console.log(llema);
+    // .replace(/#/g, "")
+    // .replace(/\*/g, "");
+    console.log();
     return { data: llema };
   } catch (error) {
     console.log(error);

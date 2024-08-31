@@ -1,13 +1,19 @@
+import Index from '@/components/preview'
+import { users } from '@/services/auth.service'
+import { Metadata } from 'next'
 import React from 'react'
 
+export const metadata: Metadata = {
+  title: "Syncro | Preview",
+  description: ""
+}
 
-const Home = async () => {
+// export const runtime = "edge"
+const Home = () => {
   return (
 
     <div className=' w-full h-full'>
-      <p className=' text-[24px] font-bold'>Hi,
-
-      </p>
+      <Index />
     </div >
 
   )

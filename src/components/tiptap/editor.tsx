@@ -1,6 +1,6 @@
 'use client'
 import { useEditor } from '@tiptap/react'
-import React, { useEffect } from 'react'
+import React from 'react'
 import CharacterCount from '@tiptap/extension-character-count'
 import Color from '@tiptap/extension-color'
 import TextAlign from '@tiptap/extension-text-align'
@@ -18,8 +18,7 @@ import Youtube from '@tiptap/extension-youtube'
 import Editors from '.'
 import BubbleMenu from './bubbleMenu'
 import Hover from './floating'
-import Provider, { useTagContext } from '@/context/chat'
-
+import Provider from '@/context/chat'
 
 
 
@@ -46,8 +45,11 @@ const Editor = () => {
       Youtube,
       CustomTaskItem,
       TaskList,
+      TaskItem.configure({
+        nested: true,
+      }),
       CharacterCount.configure({
-        limit: 800,
+        limit: 4000,
       })
     ],
 

@@ -5,16 +5,15 @@ import Question from '../_chat/question'
 
 const Main = () => {
   return (
-    <div className=' w-full h-[90%] bg-lime-400  relative'>
-      <div className=' h-[80%] overflow-y-scroll  p-4'>
+    <div className=' w-full h-[90%]  relative'>
+      <div className=' h-full w-full p-4'>
         <Forwardtext
           imageShown={true}
           message='tfcgyuhyjuihjjnnhhbhcbvhjxcvjxcvjxcvjxcvnjkxcvnxjkcvnxjkcvnxjkvnjk' />
         <Question
-          image=''
-          message='tfcgyuhyjuihjjnnhhbhcbvhjxcvjxcvjxcvjxcvnjkxcvnxjkcvnxjkcvnxjkvnjktfcgyuhyjuihjjnnhhbhcbvhjxcvjxcvjxcvjxcvnjkxcvnxjkcvnxjkcvnxjkvnjktfcgyuhyjuihjjnnhhbhcbvhjxcvjxcvjxcvjxcvnjkxcvnxjkcvnxjkcvnxjkvnjk' />
+          message='tfcgyuhyjuihjjnqqqqqqqqqqqqqqqqqqqqsddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddd' />
       </div>
-      <div className=' fixed w-full '>
+      <div className=' w-full '>
         <InputChat />
       </div>
     </div>

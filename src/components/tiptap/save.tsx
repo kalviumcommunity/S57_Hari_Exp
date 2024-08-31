@@ -20,7 +20,7 @@ const tagss = async (save: string) => {
 
 const titles = async (saves: string) => {
   const content = JSON.stringify(saves + title)
-  const llema = (await Title(content)).replace(/\n/g, '').replace(/ /g, '_')
+  const llema = (await Title(content)).trim()
   console.log(llema)
   return llema
 }

@@ -8,7 +8,6 @@ import { useForm } from 'react-hook-form'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { aiEditor } from '@/services/editor.service'
 import { Loader } from 'lucide-react'
-import { useTagContext } from '@/context/chat'
 import { prompt } from '@/lib/prompt'
 
 interface AiformInterface {
@@ -48,7 +47,7 @@ const Aiform = ({ pass, disable }: AiformInterface) => {
               </FormItem>
             )}
           />
-          <Button type='submit' disabled={disable && disable}>{isLoading ? <Loader className=" animate-spin w-6 h-6" /> : 'Generator'}</Button>
+          <Button type='submit' disabled={disable && disable}>{isLoading ? <Loader className=" animate-spin w-4 h-4" /> : 'Generator'}</Button>
         </form>
       </Form>
     </div>

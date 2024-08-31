@@ -11,7 +11,7 @@ import FileUploader from '../uploader'
 import { Loader } from 'lucide-react'
 import { Clipboard } from './copy'
 
-const Sidebar = ({ editor, noteId, setEdit }: { editor: Editor, noteId: string, setEdit: (data: boolean) => void }) => {
+const Sidebar = ({ editor, noteId, setEdit }: { editor: Editor, noteId: string, setEdit: (data?: boolean) => void }) => {
 
   // states
 
@@ -19,7 +19,6 @@ const Sidebar = ({ editor, noteId, setEdit }: { editor: Editor, noteId: string, 
   console.log(saves)
   const [content, setContent] = useState<string>()
   const [editable, setEditor] = useState(false)
-  const [copy, setCopy] = useState(false)
 
   // functions
   const handle = (data: string) => {
@@ -37,15 +36,15 @@ const Sidebar = ({ editor, noteId, setEdit }: { editor: Editor, noteId: string, 
 
 
   useEffect(() => {
-    editor?.chain().focus().insertContent(content).run()
+    editor?.chain().focus()?.insertContent(content ? content : '').run()
   }, [content])
 
 
   console.log(content)
   return (
     <div className=' flex flex-col justify-between h-full overflow-y-auto ' style={{ scrollbarWidth: 'none' }}>
-      <div className=' flex gap-x-6 '>
-        <div className=' flex gap-x-6 border py-2 rounded-full px-4 mb-4'>
+      <div className=' flex justify-between'>
+        <div className=' flex gap-x-6 py-2 px-4 mb-4'>
           <Switch onCheckedChange={() => edit()} />
           <p className=' text-[12px] items-center flex'>{editable ? 'Editable' : 'Edit'}</p>
         </div>
@@ -58,9 +57,8 @@ const Sidebar = ({ editor, noteId, setEdit }: { editor: Editor, noteId: string, 
       <Aiform pass={handle} disable={!editable} />
       <div className=' flex flex-col gap-y-6'>
         <Counter editor={editor} limit={4000} />
-        <Button onClick={() => editors()}>{saves ? <div className=' flex gap-x-4 items-center'>
+        <Button onClick={() => editors()}>{saves ? <div className=' flex items-center'>
           <Loader className=' animate-spin w-4 h-4' />
-          <p>saving</p>
         </div> : 'save'}</Button>
       </div>
     </div>

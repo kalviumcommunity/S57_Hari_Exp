@@ -1,4 +1,3 @@
-import image from 'next/image'
 import React from 'react'
 import { Button } from '../ui/button'
 import type { Editor } from '@tiptap/react'

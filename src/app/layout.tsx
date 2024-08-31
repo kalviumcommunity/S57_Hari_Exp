@@ -3,6 +3,7 @@ import { Gothic_A1 } from "next/font/google";
 import "./globals.css";
 import SessionProviders from "@/providers/session";
 import Provider from "@/context/chat";
+import OfflineProvider from "@/providers/offline";
 
 
 const inter = Gothic_A1({ subsets: ["latin"], weight: "600" });

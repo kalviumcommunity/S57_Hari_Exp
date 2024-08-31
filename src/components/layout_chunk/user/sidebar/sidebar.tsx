@@ -1,12 +1,8 @@
 'use client'
-import Link from 'next/link'
-import React, { useCallback } from 'react'
+import React from 'react'
 import { Home, MessageCircle, Settings, Bot, Notebook } from 'lucide-react'
-import { Button } from '../../../ui/button'
 import Image from 'next/image'
 import logo from '../../../../../public/vercel.svg'
-import { usePathname, useRouter } from 'next/navigation'
-import { cn } from '@/lib/utils'
 import Buttons from './buttons'
 
 const Sidebar = () => {

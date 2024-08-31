@@ -1,20 +1,19 @@
-import withBundleAnalyzer from "@next/bundle-analyzer";
-
+// next.config.mjs
+/** @type {import('next').NextConfig} */
 const nextConfig = {
-  // Your Next.js configuration options here
+  async headers() {
+    return [
+      {
+        source: "/(.*).(js|css|png|jpg|jpeg|svg|woff2|woff|ttf|eot)",
+        headers: [
+          {
+            key: "Cache-Control",
+            value: "public, max-age=31536000, immutable",
+          },
+        ],
+      },
+    ];
+  },
 };
 
-// export default withBundleAnalyzer({
-//   ...nextConfig,
-//   enabled: process.env.ANALYZE === "true",
-// });
-
-// import withPWA from "next-pwa";
-
-// export default withPWA({
-//   pwa: {
-//     dest: "public",
-//     register: true,
-//     skipWaiting: true,
-//   },
-// });
+export default nextConfig;

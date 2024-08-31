@@ -24,7 +24,6 @@ export async function notes() {
           },
         },
       },
-      cacheStrategy: { swr: 60, ttl: 60 },
     });
     return notes;
   } catch (error) {
@@ -32,16 +31,16 @@ export async function notes() {
   }
 }
 
-// async function cacheNotes(userid: string) {
-//   const postId = `user:${userid}`;
-//   const notes = await redis.hgetall(postId);
-//   if (!notes) {
-//     return {
-//       response: "not found",
-//     };
-//   }
-//   console.log(notes);
-//   return {
-//     notes,
-//   };
-// }
+export async function cacheNotes(userid: string) {
+  const postId = `user:${userid}`;
+  const notes = await redis.hgetall(postId);
+  if (!notes) {
+    return {
+      response: "not found",
+    };
+  }
+  console.log(notes);
+  return {
+    notes,
+  };
+}

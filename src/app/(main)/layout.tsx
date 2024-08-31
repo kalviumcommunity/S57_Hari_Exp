@@ -4,14 +4,14 @@ import Navbar from '@/components/layout_chunk/navbar'
 import { Toaster } from '@/components/ui/toaster'
 
 
-const MainLayout = async ({ children }: { children: React.ReactNode }) => {
+const MainLayout = ({ children }: { children: React.ReactNode }) => {
   return (
     <div className=' h-screen w-full  flex'>
       <div className=' h-full w-[6%] border fixed max-lg:w-0 max-lg:hidden'>
         <Sidebar />
       </div>
       <div className=' h-full w-[94%] ml-[92px] max-lg:w-full max-lg:ml-0 p-1'>
-        <div className=' h-[9vh] fixed w-[93%]'>
+        <div className=' h-[9vh] fixed w-[93%] max-lg:w-full'>
           <Navbar />
         </div>
         <div className=' w-full h-[88vh] mt-[4.6rem] border rounded-lg'>
