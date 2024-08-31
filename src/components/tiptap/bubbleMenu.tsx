@@ -1,9 +1,10 @@
 import React, { useCallback } from 'react'
 import { Button } from '../ui/button'
-import { Editor } from '@tiptap/react'
+import { Editor, isActive } from '@tiptap/react'
 import { Image } from 'lucide-react'
 import { cn } from '@/lib/utils'
 import dynamic from 'next/dynamic'
+import { Input } from '../ui/input'
 
 const Bubble = dynamic(() => import('./bubble'))
 
@@ -59,7 +60,9 @@ const BubbleMenu = ({ editor }: { editor: Editor }) => {
   return (
     <div>
       {editor &&
-        <Bubble editor={editor} options={options} />
+        <>
+          <Bubble editor={editor} options={options} />
+        </>
       }
     </div>
   )

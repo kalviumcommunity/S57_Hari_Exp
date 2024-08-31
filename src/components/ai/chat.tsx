@@ -26,7 +26,7 @@ const ChatInput = () => {
     setLoading(true)
     const parses = formSchema.parse(data)
     if (!parses) return
-    const chat = await sendChat(data.chat)
+    await sendChat(data.chat)
     setLoading(false)
   }
   return (

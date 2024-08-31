@@ -16,12 +16,12 @@ import { aiEditor } from '@/services/editor.service'
 
 
 const AiGenerator = ({ editor }: { editor: Editor }) => {
-  const [content, setContent] = useState()
+  const [content, setContent] = useState<string>()
   useEffect(() => {
     editor?.chain()?.focus()?.insertContent(content).run()
-  }, [content])
+  }, [content, editor])
   const handle = (data: string) => {
-    setContent(data)
+    setContent(data ? data : '')
   }
   return (
     <div className=' w-full h-full flex flex-col gap-y-6 justify-between p-2 py-2 border rounded-sm max-lg:'>
@@ -33,7 +33,7 @@ const AiGenerator = ({ editor }: { editor: Editor }) => {
       </div>
       <div className=' w-full flex justify-between items-center max-lg:justify-center max-lg:gap-y-6 max-lg:flex-col-reverse'>
         <Save editor={editor} />
-        <Counter editor={editor} limit={800} />
+        <Counter editor={editor} limit={3000} />
       </div>
     </div>
   )

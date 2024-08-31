@@ -1,15 +1,13 @@
 import React from 'react'
-import { Input } from '../ui/input'
 import type { Editor } from '@tiptap/react'
 // import image from '../../../public/picture-svgrepo-com.svg'
-import Image from 'next/image'
 import { Button } from '../ui/button'
 
 const ImageFromLink = ({ editor }: { editor: Editor }) => {
   const handleImage = () => {
     const url = window.prompt('Enter image Url')
     if (url) {
-      const image = editor.chain().focus().setImage({ src: url }).run()
+      editor.chain().focus().setImage({ src: url }).run()
     }
   }
   return (

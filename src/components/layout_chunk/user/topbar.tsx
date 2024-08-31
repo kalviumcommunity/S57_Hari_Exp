@@ -30,9 +30,9 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu"
 
-import React, { Suspense } from 'react'
+import React from 'react'
 import { signOut, useSession } from 'next-auth/react'
-import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
+import { Avatar, AvatarImage } from "@/components/ui/avatar"
 
 
 const UserAvatar = () => {

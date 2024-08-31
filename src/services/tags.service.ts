@@ -21,7 +21,7 @@ export async function genTags(tags: string) {
   });
   const response = (await tagss.sendMessage(tags)).response.text();
   console.log(response.toString());
-  const list = response
+  response
     .trim()
     .replace(/-/g, " ")
     .split("\n")

@@ -1,5 +1,4 @@
 import React, { useCallback } from 'react'
-import { useMemo } from 'react'
 
 function Counter({ editor, limit }: { editor: any, limit: number }) {
   const percentage = useCallback(() => editor ? Math.round((100 / limit) * editor.storage.characterCount.characters()) : 0, [editor, limit])

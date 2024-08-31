@@ -4,8 +4,8 @@ import Main from './main'
 
 const Chat = () => {
   return (
-    <div className=' col-span-10 bg-blue-200 h-full'>
-      <Header />
+    <div className=' col-span-10 h-full'>
+      {/* <Header /> */}
       <Main />
     </div>
   )

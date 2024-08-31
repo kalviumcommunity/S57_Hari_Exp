@@ -1,6 +1,3 @@
-import Notebook from '@/app/(main)/nootbook/layout'
-import Settings from '@/app/(main)/settings/page'
-import Home from '@/app/page'
 import { Button } from '@/components/ui/button'
 import { cn } from '@/lib/utils'
 import { usePathname } from 'next/navigation'

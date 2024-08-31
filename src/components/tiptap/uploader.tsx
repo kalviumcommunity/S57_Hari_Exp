@@ -1,8 +1,6 @@
 import React from 'react'
 import { Input } from '../ui/input'
 import type { Editor } from '@tiptap/react'
-import image from '../../../public/picture-svgrepo-com.svg'
-import Image from 'next/image'
 import { Button } from '../ui/button'
 
 const FileUploader = ({ editor, disable }: { editor: Editor, disable: boolean }) => {

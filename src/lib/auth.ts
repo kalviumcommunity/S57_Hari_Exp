@@ -1,9 +1,8 @@
 import NextAuth from "next-auth";
 import GithubProvider from "next-auth/providers/github";
 import GoogleProvider from "next-auth/providers/google";
-import NodemailderProvider from "next-auth/providers/nodemailer";
 import { prisma } from "../../prisma/prisma";
-import type { Session, User } from "next-auth";
+import type { User } from "next-auth";
 
 declare module "next-auth" {
   interface Session {
@@ -36,7 +35,7 @@ export const { auth, handlers, signIn, signOut } = NextAuth({
     strategy: "jwt",
   },
   callbacks: {
-    async jwt({ token, user, account }) {
+    async jwt({ token, user }) {
       if (user) {
         return {
           ...token,

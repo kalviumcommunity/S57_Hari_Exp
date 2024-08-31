@@ -2,7 +2,7 @@ import { Editor, FloatingMenu } from '@tiptap/react'
 import React from 'react'
 import { Button } from '../ui/button'
 import { cn } from '@/lib/utils'
-import { MessageSquareCode, ListOrdered } from 'lucide-react'
+import { Icons } from '../icons'
 
 
 const Hover = ({ editor }: { editor: Editor }) => {
@@ -29,35 +29,42 @@ const Hover = ({ editor }: { editor: Editor }) => {
             onClick={() => editor.chain().focus().toggleCodeBlock().run()}
             className={cn(editor?.isActive('bold') ? 'bg-purple-600 text-white' : '', 'w-full text-[12px] h-6 border')}
           >
-            <MessageSquareCode strokeWidth={0.6} className={' w-4 h-4'} />
+            {Icons.Bubble.code}
           </Button>
           <Button
             variant={null}
             onClick={() => editor.chain().focus().toggleBlockquote().run()}
             className={cn(editor?.isActive('bold') ? 'bg-purple-600 text-white' : '', 'w-full text-[12px] h-6 border')}
           >
-            Quote
+            {Icons.Bubble.quote}
           </Button>
           <Button
             variant={null}
             onClick={() => editor.chain().focus().toggleOrderedList().run()}
             className={cn(editor?.isActive('bold') ? 'bg-purple-600 text-white' : '', 'w-full text-[12px] h-6 border')}
           >
-            <ListOrdered strokeWidth={0.6} />
+            {Icons.Bubble.order}
           </Button>
           <Button
             variant={null}
             onClick={() => editor.chain().focus().toggleBulletList().run()}
             className={cn(editor?.isActive('bold') ? 'bg-purple-600 text-white' : '', 'w-full text-[12px] h-6 border')}
           >
-            :
+
           </Button>
           <Button
             variant={null}
             onClick={() => editor.chain().focus().setHorizontalRule().run()}
             className={cn(editor?.isActive('bold') ? 'bg-purple-600 text-white' : '', 'w-full text-[12px] h-6 border')}
           >
-            Horizontal rule
+            {Icons.Bubble.horizontal}
+          </Button>
+          <Button
+            variant={null}
+            onClick={() => editor.chain().focus().toggleTaskList().run()}
+            className={cn(editor?.isActive('taskList') ? 'bg-purple-600 text-white' : '', 'w-full text-[12px] h-6 border')}
+          >
+            task list
           </Button>
         </div>
       </FloatingMenu>

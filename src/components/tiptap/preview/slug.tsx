@@ -1,6 +1,6 @@
 'use client'
-import { EditorContent, useEditor } from '@tiptap/react'
-import React, { useDeferredValue, useEffect, useState } from 'react'
+import { useEditor } from '@tiptap/react'
+import React, { useEffect, useState } from 'react'
 import StarterKit from '@tiptap/starter-kit'
 import CharacterCount from '@tiptap/extension-character-count'
 import Color from '@tiptap/extension-color'
@@ -17,12 +17,7 @@ import { ResizableHandle, ResizablePanel, ResizablePanelGroup } from '@/componen
 import BubbleMenu from '../bubbleMenu'
 import Hover from '../floating'
 import Editors from '..'
-import { Switch } from "@/components/ui/switch"
-import { Button } from '@/components/ui/button'
-import { updateNotes } from '@/services/update_notes.service'
-import Counter from '../counter'
 // import Sidebar from './sidebar'
-import dynamic from 'next/dynamic'
 import Sidebar from './sidebar'
 
 
@@ -32,7 +27,6 @@ const CustomTaskItem = TaskItem.extend({
 })
 const Slug = ({ content, noteId }: { content: any, noteId: string }) => {
   console.log(noteId)
-  const [saves, setSaves] = useState(false)
   const [editable, setEditor] = useState(false)
   const handleEdit = (data: boolean) => {
     setEditor(data)
@@ -59,7 +53,7 @@ const Slug = ({ content, noteId }: { content: any, noteId: string }) => {
       CustomTaskItem,
       TaskList,
       CharacterCount.configure({
-        limit: 800,
+        limit: 6000,
       })
     ],
     editorProps: {
@@ -82,7 +76,7 @@ const Slug = ({ content, noteId }: { content: any, noteId: string }) => {
       const q = editor.commands.setContent(content);
       console.log(q)
     }
-    const boolean = editor?.setEditable(editable)
+    editor?.setEditable(editable)
     console.log(editable)
   }, [editor, content, editable])
   return (

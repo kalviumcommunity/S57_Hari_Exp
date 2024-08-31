@@ -10,13 +10,10 @@ interface ChatInterface {
 }
 const Forwardtext = ({ imageShown, message, className }: ChatInterface) => {
   return (
-    <div className=' w-[40%] text-nowrap h-fit'>
-      <div className="flex items-start gap-2.5 h-full w-full">
-        <Image className={cn('w-8 h-8 rounded-full', className, imageShown && 'hidden')} src={ai} alt="Jese image" />
-        <div className="flex flex-col w-full w-full leading-1.5 p-4 border-gray-200 bg-gray-100 rounded-e-xl rounded-es-xl dark:bg-gray-700">
-          {message}
-        </div>
-
+    <div className=' w-[50%]'>
+      <div className=' bg-slate-100 w-full p-4 rounded-r-2xl rounded-b-2xl text-[13px]'>
+        Lorem ipsum dolor sit amet consectetur adipisicing elit. Nostrum deleniti sit labore consectetur ipsum autem tempora, nesciunt tenetur impedit accusamus. Eius harum perferendis aliquid quae. Dolorem numquam facilis aliquid cumque.
+        lore
       </div>
     </div>
   )

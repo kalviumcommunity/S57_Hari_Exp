@@ -21,5 +21,7 @@ export async function Title(title: string) {
     history: [],
   });
   const answer = (await text.sendMessage(title)).response.text();
-  return answer;
+  console.log(answer);
+  const tagAnswer = answer.replaceAll(" ", "-");
+  return tagAnswer;
 }
