@@ -4,6 +4,7 @@ import Navbar from '@/components/layout_chunk/navbar'
 import { Toaster } from '@/components/ui/toaster'
 
 
+
 const MainLayout = ({ children }: { children: React.ReactNode }) => {
   return (
     <div className=' h-screen w-full  flex'>
