@@ -1,7 +1,7 @@
 "use server";
 
 import { redis } from "@/lib/redis";
-import { prisma } from "../../prisma/prisma";
+import prisma from "../../prisma/prisma";
 import { users } from "./auth.service";
 
 export async function notes() {

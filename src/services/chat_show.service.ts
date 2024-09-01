@@ -1,7 +1,7 @@
 "use server";
 
 import { revalidatePath } from "next/cache";
-import { prisma } from "../../prisma/prisma";
+import prisma from "../../prisma/prisma";
 import { users } from "./auth.service";
 
 export const content = async () => {

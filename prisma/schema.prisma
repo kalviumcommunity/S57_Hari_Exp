@@ -26,7 +26,7 @@ model User {
   chatId       String?       @db.ObjectId
   UserMessage  UserMessage[]
   Nootbook     Nootbook[]
-  setting      Setting
+  setting      Setting?
 }
 
 model Nootbook {

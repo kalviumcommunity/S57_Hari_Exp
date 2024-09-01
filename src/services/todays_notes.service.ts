@@ -1,6 +1,6 @@
 "use server";
 
-import { prisma } from "../../prisma/prisma";
+import prisma from "../../prisma/prisma";
 import { users } from "./auth.service";
 
 export async function todaysNotes() {
@@ -26,7 +26,7 @@ export async function todaysNotes() {
   });
   const notes = await prisma.note.findMany({
     where: {
-      nootbookId: nootbook.id,
+      nootbookId: nootbook?.id,
     },
     select: {
       createdAt: true,

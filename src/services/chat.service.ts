@@ -1,6 +1,6 @@
 "use server";
 import { GoogleGenerativeAI } from "@google/generative-ai";
-import { prisma } from "../../prisma/prisma";
+import prisma from "../../prisma/prisma";
 import { users } from "./auth.service";
 import { revalidatePath, revalidateTag } from "next/cache";
 import { redis } from "@/lib/redis";
