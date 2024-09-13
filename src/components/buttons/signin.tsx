@@ -4,7 +4,7 @@ import { Icons } from '../icons'
 import Image from 'next/image'
 import { ClassNameValue } from 'tailwind-merge'
 import { cn } from '@/lib/utils'
-import { SigninGithubAction, SigninGoogleAction } from '@/services/auth.service'
+import { SigninGithubAction, SigninGoogleAction } from '@/services/auth/auth.service'
 import Google from '../../../public/google.svg'
 
 const Signin = ({ name, className }: { name: string, className: ClassNameValue }) => {

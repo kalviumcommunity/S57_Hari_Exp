@@ -1,7 +1,7 @@
 "use server";
 import { revalidatePath } from "next/cache";
-import prisma from "../../prisma/prisma";
-import { users } from "./auth.service";
+import prisma from "../../../prisma/prisma";
+import { users } from "../auth/auth.service";
 
 export async function llema(noteId: string) {
   const regex = /^[0-9a-fA-F]{24}$/;

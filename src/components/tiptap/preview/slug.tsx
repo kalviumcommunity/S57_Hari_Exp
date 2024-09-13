@@ -53,7 +53,7 @@ const Slug = ({ content, noteId }: { content: any, noteId: string }) => {
       CustomTaskItem,
       TaskList,
       CharacterCount.configure({
-        limit: 6000,
+        limit: 8000,
       })
     ],
     editorProps: {
@@ -80,19 +80,14 @@ const Slug = ({ content, noteId }: { content: any, noteId: string }) => {
     console.log(editable)
   }, [editor, content, editable])
   return (
-    <ResizablePanelGroup direction="horizontal">
-      <ResizablePanel style={{ scrollbarWidth: 'none' }} className=' w-full h-full overflow-clip' maxSize={100} defaultSize={80}>
-        <div className=' h-full'>
-          <BubbleMenu editor={editor} />
-          <Hover editor={editor} />
-          <Editors editor={editor} />
-        </div>
+    <ResizablePanelGroup direction='horizontal'>
+      <ResizablePanel defaultSize={90} maxSize={90} style={{ scrollbarWidth: "none" }} className=' w-full h-full'>
+        <BubbleMenu editor={editor} />
+        <Hover editor={editor} />
+        <Editors editor={editor} />
       </ResizablePanel>
-      <ResizableHandle />
-      <ResizablePanel className=' w-[25%] h-full p-2 flex flex-col gap-y-6 justify-center ' maxSize={20} minSize={0} defaultSize={20}
-        onChange={(e) => console.log(e)}
-      >
-        <Sidebar editor={editor} noteId={noteId} setEdit={handleEdit} />
+      <ResizablePanel defaultSize={6} maxSize={6} className=' p-2'>
+        <Sidebar editor={editor} setEdit={setEditor} noteId={noteId} />
       </ResizablePanel>
     </ResizablePanelGroup >
   )

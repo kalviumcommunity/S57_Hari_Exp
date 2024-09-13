@@ -1,57 +1,45 @@
 'use client'
-import React, { useState } from 'react'
-import { Form, FormField, FormItem } from '../ui/form'
-import { Textarea } from '../ui/textarea'
+import React from 'react'
 import { Button } from '../ui/button'
-import { useForm } from 'react-hook-form'
-import { zodResolver } from '@hookform/resolvers/zod'
-import { z } from 'zod'
-import { formSchema } from '@/validation'
-import { sendChat } from '@/services/chat.service'
+import { sendChat } from '@/services/chat/chat.service'
 import { Loader } from 'lucide-react'
+import { useChat } from "ai/react"
+import { Input } from '../ui/input'
 
 
-
-const ChatInput = () => {
-  // const {  } = userChat();
-  const [isLoading, setLoading] = useState(false)
-  const form = useForm<z.infer<typeof formSchema>>({
-    resolver: zodResolver(formSchema),
-    defaultValues: {
-      chat: ""
-    }
-  })
-  async function onsubmit(data: z.infer<typeof formSchema>) {
-    // userMessageAction(data.chat)
-    setLoading(true)
-    const parses = formSchema.parse(data)
-    if (!parses) return
-    await sendChat(data.chat)
-    setLoading(false)
-  }
+const ChatInput = ({ sessionId }: { sessionId: string }) => {
+  const {
+    handleSubmit,
+    messages,
+    input,
+    handleInputChange,
+    isLoading } = useChat(
+      {
+        body: { sessionId },
+        api: "/api/syncro"
+      }
+    );
   return (
-    <Form {...form}>
-      <form className=' flex w-[80%] justify-center gap-x-1 items-center p-6  fixed bg-transparent' onSubmit={form.handleSubmit(onsubmit)}
+    <>
+      <div>
+        {JSON.stringify(messages)}
+      </div>
+      <form className=' flex w-[80%] justify-center gap-x-1 items-center p-6  fixed bg-transparent' onSubmit={handleSubmit}
       >
-        <FormField
-          name='chat'
-          control={form.control}
-          render={({ field }) => (
-            <FormItem className=' w-full'>
-              <Textarea className=' resize-none  flex-1' {...field} />
-            </FormItem>
-          )}
-        >
-        </FormField>
+        <input
+          className=' resize-none  flex-1'
+        // value={input}
+        // onChange={(e) => handleInputChange(e.target.value)}
+
+        />
         <Button
           disabled={isLoading}
           variant={null}
           type='submit'>
           {isLoading ? <Loader className=" animate-spin" /> : "Submit"}
         </Button>
-      </form>
-
-    </Form>
+      </form >
+    </>
   )
 }
 

@@ -7,11 +7,11 @@ import { Form, FormControl, FormField, FormItem } from '../../ui/form'
 import { z } from 'zod'
 import { useForm } from 'react-hook-form'
 import { zodResolver } from '@hookform/resolvers/zod'
-import { llema } from '@/services/copynotes.service'
+import { llema } from '@/services/notes/copynotes.service'
 import { useToast } from '@/components/ui/use-toast'
 import { Loader2 } from 'lucide-react';
 import { cn } from '@/lib/utils'
-import { delete_note } from '@/services/delete_notes.service'
+import { delete_note } from '@/services/notes/delete_notes.service'
 
 interface DeleteInterface {
   noteId: string

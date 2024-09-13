@@ -1,5 +1,5 @@
 'use client'
-import React from 'react'
+import React, { useRef } from 'react'
 import { Form, FormControl, FormField, FormItem } from '../ui/form'
 import { z } from 'zod'
 import { useForm } from 'react-hook-form'
@@ -20,11 +20,12 @@ const InputChat = () => {
   const onSubmit = (data: z.infer<typeof formSchema>) => {
     console.log(data)
   }
+  const input_ref = useRef(null)
   return (
-    <div className=''>
+    <div className=' w-full '>
       <Form {...form}>
         <form onSubmit={form.handleSubmit(onSubmit)}
-          className=' flex gap-x-3'
+          className=' w-full flex gap-x-4 justify-center items-center'
         >
           <FormField
             name='message'
@@ -32,7 +33,10 @@ const InputChat = () => {
             render={({ field }) => (
               <FormItem>
                 <FormControl>
-                  <Textarea {...field} className=' h-[30px] w-[600px] rounded-full' />
+                  <textarea  {...field} className=' h-[60px] w-[600px] rounded-full border p-4' onKeyDown={(e) => {
+                    e.preventDefault()
+                    form.handleSubmit(onSubmit)
+                  }} />
                 </FormControl>
               </FormItem>
             )}

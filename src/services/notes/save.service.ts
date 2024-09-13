@@ -1,7 +1,7 @@
 "use server";
 import { revalidatePath } from "next/cache";
-import prisma from "../../prisma/prisma";
-import { users } from "./auth.service";
+import prisma from "../../../prisma/prisma";
+import { users } from "../auth/auth.service";
 import { redis } from "@/lib/redis";
 
 import { Note } from "@prisma/client";
@@ -42,7 +42,7 @@ export const save = async (
         },
       });
     }
-    const notes: Note = await prisma.note.create({
+    const note = await prisma.note.create({
       data: {
         notes: html,
         nootbookId: nootbook.id,
@@ -50,24 +50,37 @@ export const save = async (
         tags: tags,
       },
     });
-    console.log(notes);
+    console.log(note);
+    await cacheNotes(userss.id, note.id, note);
     // llema(userss?.id, notes);
     // store(userss?.notebookId, notes, notes.id)
     revalidatePath(`/nootbook/overview`);
     revalidatePath(`/nootbook/${tag}`);
 
     return {
-      success: notes,
+      success: note,
     };
   } catch (error) {
     console.log(error);
   }
 };
 
-async function cacheIn(userId: string, notes: {}) {
-  const post = `user:${userId}`;
-  const data = await redis.hset(post, {
-    [`postid:${Date.now()}`]: notes,
-  });
-  console.log(data);
+//noteiDS
+async function cacheNotes(
+  userId: string,
+  noteId: string,
+  notes: {
+    id: string;
+    tag: string;
+    tags: string[];
+    notes: string;
+    createdAt: Date;
+    updatedAt: Date;
+    nootbookId: string | null;
+  }
+) {
+  const note = await redis.sadd(`user:${userId}:notes`, noteId);
+  const notesave = await redis.set(`user:${userId}:note:${noteId}`, notes);
+  console.log(notesave);
+  console.log(note);
 }

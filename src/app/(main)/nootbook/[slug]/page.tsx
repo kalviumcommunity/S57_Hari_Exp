@@ -1,8 +1,6 @@
 import React from 'react'
-import { getNotes } from '@/services/nootbook.service'
+import { getNotes } from '@/services/notes/nootbook.service'
 import Slug from '@/components/tiptap/preview/slug'
-
-// export const runtime = 'edge'
 
 interface Slug {
   params: {

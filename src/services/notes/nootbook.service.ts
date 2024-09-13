@@ -1,6 +1,6 @@
 "use server";
-import prisma from "../../prisma/prisma";
-import { users } from "./auth.service";
+import prisma from "../../../prisma/prisma";
+import { users } from "../auth/auth.service";
 
 export async function getNotes(tags: string) {
   try {
