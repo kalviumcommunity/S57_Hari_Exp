@@ -1,6 +1,6 @@
 import React, { Suspense, useState } from 'react'
 import Header from './header'
-import { notes } from '@/services/notes.service'
+import { notes } from '@/services/notes/notes.service'
 // import { prisma } from '../../../prisma/prisma'
 import Image from 'next/image'
 import notFound from '../../../public/undraw_notebook_re_id0r.svg'
@@ -9,29 +9,18 @@ import Card from './cards/card'
 import { Skeleton } from '../ui/skeleton'
 
 
-async function llema(query?: string) {
+async function llema() {
   const content = await notes()
-  const boolean = content?.some(note => note.notes.length > 0)
-  console.log(boolean)
-  const data = content?.map(content => content.notes.map(note => note))
-  console.log(data)
+  console.log(content?.notes)
+  const boolean = content?.notes?.length ? true : false
   return {
     render: boolean,
-    content: data
+    content: content
   }
 }
-
-// async function deletes() {
-//   const notes = await prisma.note.deleteMany();
-//   console.log(notes);
-// }
-
-
 const Index = async () => {
-  // const [search, setSearch] = useState(String)
   const notes = await llema()
-  // const handleSearch = (query: string) => { }
-  // deletes();
+  console.log(notes)
   return (
     <div className=' w-full h-full p-4 overflow-y-auto'>
       <Header />
@@ -40,11 +29,13 @@ const Index = async () => {
       <div className={`min-h-fit mt-[4rem] ${notes.render && "grid grid-cols-4 gap-y-4"}  w-full h-[80%]`}>
         {
           notes.render ? (
-            notes.content?.map(note => (
-              note.map(n => (
-                <Card date={n.createdAt} heading={n.tag} paragraph={n.notes.replaceAll(/<[^>]*\/?>/g, ' ')} noteId={n.id} key={n.tag} />
-
-              ))
+            notes.content?.notes?.map(note => (
+              <Card
+                date={note?.createdAt}
+                heading={note?.tag as string}
+                paragraph={note?.notes.replaceAll(/<[^>]*\/?>/g, ' ') as string}
+                noteId={note?.id} key={note?.tag}
+              />
             ))
           ) : (
             <div className=' w-full h-full flex justify-center items-center  flex-col gap-y-6 '>

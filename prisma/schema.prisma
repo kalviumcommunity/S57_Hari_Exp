@@ -5,7 +5,8 @@
 // Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
 
 generator client {
-  provider = "prisma-client-js"
+  provider        = "prisma-client-js"
+  previewFeatures = ["fullTextSearch", "fullTextIndex"]
 }
 
 datasource db {
@@ -14,17 +15,15 @@ datasource db {
 }
 
 model User {
-  id           String        @id @default(auto()) @map("_id") @db.ObjectId
+  id           String      @id @default(auto()) @map("_id") @db.ObjectId
   name         String
   email        String
   emailVerfied Boolean
   image        String?
-  created_at   DateTime      @default(now())
+  created_at   DateTime    @default(now())
   video        Video[]
-  notebookId   String?       @db.ObjectId
-  Chat         Chat?         @relation(fields: [chatId], references: [id])
-  chatId       String?       @db.ObjectId
-  UserMessage  UserMessage[]
+  notebookId   String?     @db.ObjectId
+  chat         SyncroChat?
   Nootbook     Nootbook[]
   setting      Setting?
 }
@@ -79,28 +78,21 @@ model Video {
   userId    String?  @db.ObjectId
 }
 
-model Chat {
-  id          String        @id @default(auto()) @map("_id") @db.ObjectId
-  user        User[]
-  AiMessage   AiMessage[]
-  userId      String        @unique @db.ObjectId
-  UserMessage UserMessage[]
+model SyncroChat {
+  id              String         @id @default(auto()) @map("_id") @db.ObjectId
+  user            User           @relation(fields: [userId], references: [id])
+  userId          String         @unique @db.ObjectId
+  SyncroMessage   SyncroMessage? @relation(fields: [syncroMessageId], references: [id])
+  syncroMessageId String?        @db.ObjectId
 }
 
-model UserMessage {
-  id      String @id @default(auto()) @map("_id") @db.ObjectId
-  content String
-  chat    Chat   @relation(fields: [chatId], references: [id])
-  chatId  String @db.ObjectId
-  user    User   @relation(fields: [userId], references: [id])
-  userId  String @db.ObjectId
-  match   String
+model SyncroMessage {
+  id   String       @id @default(auto()) @map("_id") @db.ObjectId
+  chat SyncroChat[]
+  role Role
 }
 
-model AiMessage {
-  id      String @id @default(auto()) @map("_id") @db.ObjectId
-  content String
-  chat    Chat   @relation(fields: [chatId], references: [id])
-  chatId  String @db.ObjectId
-  match   String
+enum Role {
+  USER
+  AI
 }

@@ -17,15 +17,15 @@ const Paragraph = ({ nice, heading, paragraph, noteId }: Paragrah) => {
       <div className=' flex flex-col gap-y-2 w-full h-full justify-between' >
         <div className=' flex flex-col gap-y-4'>
           <h6 className='' onClick={() => router.push(`/nootbook/${heading}`)}>{heading}</h6>
-          <p className=' text-[12px]'>{paragraph.length > 8 ? paragraph.slice(0, 100) : paragraph}....</p>
+          <p className=' text-[12px] break-words'>{paragraph.length > 8 ? paragraph.toString().slice(0, 100) : paragraph}....</p>
         </div>
         <div className='flex justify-between items-center'>
-          <Badge variant={null} className={` border rounded-full text-[12px]
+          {/* <Badge variant={null} className={` border rounded-full text-[12px]
       ${nice === 'Today' && 'border-blue-600 bg-blue-200'}
       ${nice === 'Yesterday' && 'border-purple-600 bg-purple-200'}
       ${nice === 'Day Before' && 'border-fuchsia-600'}`}>
             {nice}
-          </Badge>
+          </Badge> */}
           <Delete noteId={noteId} />
         </div>
 

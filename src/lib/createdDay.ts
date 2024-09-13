@@ -7,7 +7,7 @@ export function day(date: Date) {
   const u = current.getDate();
   console.log(u);
   const month = current.getMonth();
-  const o = date.getDate();
+  const o = date?.getDate();
   console.log(o);
   const createdMonth = date.getMonth();
   console.log(u - o);
