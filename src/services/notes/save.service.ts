@@ -7,23 +7,23 @@ import { redis } from "@/lib/redis";
 import { Note } from "@prisma/client";
 import { Ratelimit } from "@upstash/ratelimit";
 
-// const ratelimit = new Ratelimit({
-//   redis,
-//   limiter: Ratelimit.slidingWindow(10, "120s"),
-// });
+const ratelimit = new Ratelimit({
+  redis,
+  limiter: Ratelimit.slidingWindow(10, "120s"),
+});
 export const save = async (
   html: string,
   tag: string,
   tags: string | string[]
 ) => {
-  // const headers = new Headers().get("x-forward-for");
+  const headers = new Headers().get("x-forward-for");
   try {
-    //   const { success } = await ratelimit.limit(headers);
-    //   if (success) {
-    //     return {
-    //       message: "rate limit exceeded",
-    //     };
-    //   }
+    const { success } = await ratelimit.limit(headers);
+    if (success) {
+      return {
+        message: "rate limit exceeded",
+      };
+    }
     const session = await users();
     const userss = await prisma.user.findFirst({
       where: {
