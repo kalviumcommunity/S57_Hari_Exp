@@ -1,5 +1,5 @@
 import Index from '@/components/preview'
-import { users } from '@/services/auth.service'
+import { users } from '@/services/auth/auth.service'
 import { Metadata } from 'next'
 import React from 'react'
 

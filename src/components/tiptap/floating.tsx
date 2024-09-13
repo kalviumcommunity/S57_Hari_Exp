@@ -1,15 +1,16 @@
 import { Editor, FloatingMenu } from '@tiptap/react'
-import React from 'react'
+import React, { useState } from 'react'
 import { Button } from '../ui/button'
 import { cn } from '@/lib/utils'
 import { Icons } from '../icons'
 
 
 const Hover = ({ editor }: { editor: Editor }) => {
+
   return (
     <div>
-      <FloatingMenu editor={editor} tippyOptions={{ duration: 100 }}>
-        <div className=" w-fit flex gap-x-1 border-2 p-1 rounded-lg ">
+      <FloatingMenu editor={editor} tippyOptions={{ duration: 100 }} >
+        <div className=" w-fit flex gap-x-1 border-2 p-1 rounded-lg bg-white">
           <Button
             variant={null}
             onClick={() => editor.chain().focus().toggleHeading({ level: 1 }).run()}

@@ -1,7 +1,7 @@
-import { todaysNotes } from '@/services/todays_notes.service'
+import { todaysNotes } from '@/services/notes/todays_notes.service'
 import React from 'react'
 import Card from '../nootbook_preview/cards/card'
-import Nodata from '../../../public/undraw_no_data_re_kwbl.svg'
+import Nodata from '../../../public/undraw_add_notes_re_ln36.svg'
 import Image from 'next/image'
 import { cn } from '@/lib/utils'
 import { Button } from '../ui/button'
@@ -20,19 +20,21 @@ const Today_Notes = async () => {
   const note = await notes()
   console.log(note)
   return (
-    <div className={cn(note.render ? ' grid grid-cols-4' : 'flex justify-center items-center p-6 flex-col gap-y-6', ' h-full w-full')} >
+    <div className={cn(note.render ? ' grid grid-cols-4' : 'flex gap-y-6 p-24 items-center', ' h-full w-full ')} >
       {
         note?.render ? note.content?.map(note => (
           <Card heading={note.tag} paragraph={note.notes} key={note.tag} date={note.createdAt} />
         ))
           :
-          <>
-            <Image src={Nodata} alt='' className=' ' width={400} height={400} />
-            <p className='' >
-              Get Started by Adding Your First Note Today to Keep Track of Your Ideas and Tasks
-            </p>
-            <Create_notes_Button />
-          </>
+          <div className=' flex items-start gap-x-9'>
+            <Image src={Nodata} alt='' className=' ' width={200} height={200} />
+            <div className=' flex items-start flex-col gap-y-4'>
+              <p className=' font-extralight' >
+                Get Started by Adding Your First Note Today to Keep Track of Your Ideas and Tasks
+              </p>
+              <Create_notes_Button />
+            </div>
+          </div>
       }
     </div >
   )

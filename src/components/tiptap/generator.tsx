@@ -7,6 +7,7 @@ import ImageFromLink from './image from link'
 import Save from './save'
 import FileUploader from './uploader'
 import { aiEditor } from '@/services/editor.service'
+import History from './history'
 
 
 // const FileUploader = dynamic(() => import('./uploader'))
@@ -15,7 +16,7 @@ import { aiEditor } from '@/services/editor.service'
 // const Save = dynamic(() => import('./save'))
 
 
-const AiGenerator = ({ editor }: { editor: Editor }) => {
+const Tools = ({ editor }: { editor: Editor }) => {
   const [content, setContent] = useState<string>()
   useEffect(() => {
     editor?.chain()?.focus()?.insertContent(content).run()
@@ -24,19 +25,24 @@ const AiGenerator = ({ editor }: { editor: Editor }) => {
     setContent(data ? data : '')
   }
   return (
-    <div className=' w-full h-full flex flex-col gap-y-6 justify-between p-2 py-2 border rounded-sm max-lg:'>
-      <div className=' w-full flex flex-col gap-y-2'>
-        <Youtube editor={editor} />
-        <ImageFromLink editor={editor} />
-        <FileUploader disable={false} editor={editor} />
-        <Aiform service={aiEditor} pass={handle} />
+    <div className=' w-full h-full flex flex-col gap-y-6 p-2 border rounded-[12px] items-center justify-between'>
+      <div className=' flex flex-col gap-y-4'>
+        <div className=' w-full flex flex-col gap-y-2'>
+          <Youtube editor={editor} />
+          <ImageFromLink editor={editor} />
+          <FileUploader disable={false} editor={editor} />
+        </div>
+        <hr />
+        <div className=' w-full flex flex-col gap-y-2'>
+          <History editor={editor} />
+        </div>
       </div>
-      <div className=' w-full flex justify-between items-center max-lg:justify-center max-lg:gap-y-6 max-lg:flex-col-reverse'>
+      <div className=' w-full flex justify-between items-center max-lg:justify-center max-lg:gap-y-6 max-lg:flex-col flex-col-reverse gap-y-4'>
         <Save editor={editor} />
-        <Counter editor={editor} limit={3000} />
+        {/* <Counter editor={editor} limit={4000} /> */}
       </div>
     </div>
   )
 }
 
-export default AiGenerator
+export default Tools

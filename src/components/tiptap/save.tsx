@@ -3,12 +3,12 @@ import React, { useState } from 'react'
 import { Button } from '../ui/button'
 import type { Editor } from '@tiptap/react'
 import { Loader } from 'lucide-react'
-import { save } from '@/services/save.service'
+import { save } from '@/services/notes/save.service'
 import { useRouter } from 'next/navigation'
 import { useToast } from '../ui/use-toast'
-import { Title } from '@/services/tag_generator.service'
+import { Title } from '@/services/notes/tag_generator.service'
 import { tags, title } from '@/lib/prompt'
-import { genTags } from '@/services/tags.service'
+import { genTags } from '@/services/notes/tags.service'
 
 
 const tagss = async (save: string) => {

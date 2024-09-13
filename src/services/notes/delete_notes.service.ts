@@ -1,7 +1,7 @@
 "use server";
 import { revalidatePath } from "next/cache";
-import prisma from "../../prisma/prisma";
-import { users } from "./auth.service";
+import prisma from "../../../prisma/prisma";
+import { users } from "../auth/auth.service";
 import { redis } from "@/lib/redis";
 
 export async function delete_note(noteId: string) {
@@ -27,8 +27,12 @@ export async function delete_note(noteId: string) {
       id: noteId,
     },
   });
-  // const post = `user:${userId}`;
-  // const data = await redis.hdel(post);
+  let deelte = await delete_cached_notes(userId?.id as string, noteId);
+  if (deelte.err) {
+    return {
+      message: "Try again",
+    };
+  }
   if (!note) {
     return {
       message: "Try again",
@@ -38,4 +42,17 @@ export async function delete_note(noteId: string) {
   return {
     message: "deleted successfully",
   };
+}
+
+async function delete_cached_notes(userId: string, noteId: string) {
+  let s = await redis.srem(`user:${userId}:notes`, noteId);
+  if (s === 1) {
+    return {
+      note: `note ${noteId} removes`,
+    };
+  } else {
+    return {
+      err: `note ${noteId} not removed`,
+    };
+  }
 }

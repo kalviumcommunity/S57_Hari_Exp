@@ -4,7 +4,7 @@ import React from 'react'
 
 const Editors = ({ editor }: { editor: Editor }) => {
   return (
-    <EditorContent editor={editor} className=' w-full h-full' contentEditable="inherit" />
+    <EditorContent editor={editor} contentEditable="inherit" />
   )
 }
 

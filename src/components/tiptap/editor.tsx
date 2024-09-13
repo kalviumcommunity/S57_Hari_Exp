@@ -19,19 +19,20 @@ import Editors from '.'
 import BubbleMenu from './bubbleMenu'
 import Hover from './floating'
 import Provider from '@/context/chat'
+import Tools from './generator'
+import History from '@tiptap/extension-history'
 
 
-
-const CustomTaskItem = TaskItem.extend({
-  content: 'inline*',
-})
+// const CustomTaskItem = TaskItem.extend({
+//   content: 'inline*',
+// })
 const Editor = () => {
   const editor = useEditor({
     extensions: [
       Link.configure({
         openOnClick: true,
         autolink: true,
-        protocols: ['https', 'http']
+        protocols: ['https', 'http'],
       }),
       Image,
       Highlight,
@@ -43,19 +44,19 @@ const Editor = () => {
       Color,
       StarterKit,
       Youtube,
-      CustomTaskItem,
-      TaskList,
+      // CustomTaskItem,
+      TaskList.configure(),
       TaskItem.configure({
-        nested: true,
+
       }),
       CharacterCount.configure({
-        limit: 4000,
+        limit: 6000,
       })
     ],
 
     editorProps: {
       attributes: {
-        class: 'prose [&_ol]:list-decimal [&_ul]:list-disc w-full h-[86vh] focus:outline-none overflow-y-auto p-4 absolute  bg-white bg-[radial-gradient(#e5e7eb_1px,transparent_1px)] [background-size:16px_16px] selection:bg-slate-400',
+        class: 'prose [&_ol]:list-decimal [&_ul]:list-disc w-full h-[86vh] focus:outline-none overflow-y-auto absolute p-4 bg-white bg-[radial-gradient(#e5e7eb_1px,transparent_1px)] [background-size:16px_16px] selection:bg-slate-400',
       },
     },
     enablePasteRules: true,
@@ -71,20 +72,19 @@ const Editor = () => {
   // }, [])
   return (
     <>
-      <ResizablePanelGroup direction="horizontal">
+      <ResizablePanelGroup direction="horizontal" className=' w-full' >
         <Provider>
-          <ResizablePanel className=' w-full h-full overflow-clip' maxSize={100} defaultSize={80}>
-            <div className=' h-full'>
+          <div className=' w-[93%] h-full overflow-clip' style={{ scrollbarWidth: "none" }}>
+            <div className=' h-full w-full' >
               <BubbleMenu editor={editor} />
               <Hover editor={editor} />
               <Editors editor={editor} />
             </div>
-          </ResizablePanel>
-          <ResizablePanel className=' w-[25%] h-full p-2 ' maxSize={20} defaultSize={20}
-            onChange={(e) => console.log(e)}
+          </div>
+          <div className=' p-2 w-[7%]'
           >
-            <AiGenerator editor={editor} />
-          </ResizablePanel>
+            <Tools editor={editor} />
+          </div>
         </Provider>
       </ResizablePanelGroup>
     </>

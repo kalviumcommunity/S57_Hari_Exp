@@ -35,7 +35,7 @@ function Counter({ editor, limit }: { editor: any, limit: number }) {
           />
         </svg>
 
-        <p className=' text-[12px] max-lg:hidden'>{editor?.storage.characterCount.characters()} / {limit} characters</p>
+        <p className=' text-[12px] max-lg:hidden'>{editor?.storage.characterCount.characters()} / {limit}</p>
         <br />
       </div>
       <div>
